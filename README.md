@@ -20,4 +20,5 @@
       <version>${jackson.version}</version>
     </dependency>
 
-2、公共项目commonBean的使用    
+2、公共项目commonBean的使用:本地项目commonBean单独上传为github中commonBean；
+    
