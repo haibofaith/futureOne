@@ -5,6 +5,15 @@
 <web-app>
   <display-name>Archetype Created Web Application</display-name>
 
+  <context-param>
+    <param-name>contextConfigLocation</param-name>
+    <param-value>classpath:/conf/applicationContext.xml</param-value>
+  </context-param>
+
+  <!-- 配置Spring2:配置Spring监听2 -->
+  <listener>
+    <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+  </listener>
   <!-- 创建分发Servlet -->
   <servlet>
     <servlet-name>springmvc</servlet-name>
