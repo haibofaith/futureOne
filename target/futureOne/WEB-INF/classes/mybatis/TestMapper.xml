@@ -21,6 +21,6 @@
 	</select>
 
 	<update id="updateProductNum">
-		update my_test set product_num=product_num-1 where id=374
+		update my_test set product_num=product_num-1 where id=347
 	</update>
 </mapper>

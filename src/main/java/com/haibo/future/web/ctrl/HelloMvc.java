@@ -41,5 +41,18 @@ public class HelloMvc {
         return response.toString();
     }
 
+    @RequestMapping(value = "/seckill")
+    @ResponseBody
+    public String seckill(HttpServletRequest request) {
+        BaseResponse response = new BaseResponse();
+        int count = testService.updateProductNum();
+        response.setBody(count);
+        return response.toString();
+    }
+
+
+
+
+
 
 }
