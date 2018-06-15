@@ -30,6 +30,25 @@
     <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
   </listener>
 
+4、No appenders could be found for logger (org.springframework.web.context.ContextLoader).
+配置问题少
+<!-- Log4j的监听器要放在spring监听器前面 -->
+  <listener>
+    <listener-class>org.springframework.web.util.Log4jConfigListener</listener-class>
+  </listener>  
+
+5、日志有了，但是不打印，提示Failed to load class "org.slf4j.impl.StaticLoggerBinder".
+添加了依赖包  
+<dependency>  
+    <groupId>org.slf4j</groupId>  
+    <artifactId>slf4j-simple</artifactId>  
+    <version>1.7.25</version>  
+</dependency>  
+
+从中需要去掉  <scope>test</scope>
+
+
+
 
 
     

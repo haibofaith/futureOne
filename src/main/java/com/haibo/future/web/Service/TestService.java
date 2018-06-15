@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface TestService {
     List<TestModel> selectAll();
+    //调用：每次减1
+    int updateProductNum();
 }

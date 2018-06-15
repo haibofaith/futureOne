@@ -7,4 +7,5 @@ import java.util.List;
 @Repository
 public interface TestMapper {
     List<TestModel> selectMyTest();
+    int updateProductNum();
 }
