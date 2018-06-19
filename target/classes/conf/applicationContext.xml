@@ -56,4 +56,7 @@
         <property name="basePackage" value="com.haibo.future.web.mappers" />
         <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"></property>
     </bean>
+
+
+
 </beans>
