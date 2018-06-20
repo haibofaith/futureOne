@@ -3,10 +3,10 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
        xmlns:beans="http://www.springframework.org/schema/beans"
-       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:aop="http://www.springframework.org/schema/aop"
        xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
         http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
 
     <context:component-scan base-package="com.haibo.future.web.Service.impl"></context:component-scan>
     <!-- 定义受环境影响易变的变量 -->
@@ -14,12 +14,12 @@
           class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
         <property name="locations">
             <list>
-                <value>classpath:conf/application.properties</value>
+                <value>classpath:conf/jdbc.properties</value>
             </list>
         </property>
     </bean>
 
-    <!-- 配置crm数据源 -->
+    <!-- 第一个数据源：配置crm数据源 -->
     <bean id="crmDataSource" class="org.apache.commons.dbcp.BasicDataSource"
           destroy-method="close">
         <property name="driverClassName" value="${crm.jdbc.driverClassName}" />
@@ -44,9 +44,56 @@
         <property name="minEvictableIdleTimeMillis" value="${dbcp.minEvictableIdleTimeMillis}" />
     </bean>
 
+    <!-- 第二个数据源：配置eb数据源 -->
+    <bean id="ebDataSource" class="org.apache.commons.dbcp.BasicDataSource"
+          destroy-method="close">
+        <property name="driverClassName" value="${jdbc.two.driverClassName}" />
+        <property name="url" value="${jdbc.two.url}" />
+        <property name="username" value="${jdbc.two.username}" />
+        <property name="password" value="${jdbc.two.password}" />
+        <!-- 池启动时创建的连接数量 -->
+        <property name="initialSize" value="${dbcp.initialSize}" />
+        <!-- 池里不会被释放的最多空闲连接数量。设置为0时表示无限制 -->
+        <property name="maxIdle" value="${dbcp.maxIdle}" />
+        <!-- 同一时间可以从池分配的最多连接数量。设置为0时表示无限制 -->
+        <property name="maxActive" value="${dbcp.maxActive}" />
+        <!-- 设置自动回收超时连接 -->
+        <property name="removeAbandoned" value="true" />
+        <!-- 自动回收超时时间(以秒数为单位) -->
+        <property name="removeAbandonedTimeout" value="${dbcp.removeAbandonedTimeout}" />
+        <!-- 等待超时以毫秒为单位，在抛出异常之前，池等待连接被回收的最长时间（当没有可用连接时）。设置为-1表示无限等待 -->
+        <property name="maxWait" value="1000" />
+        <!-- 在空闲连接回收器线程运行期间休眠的时间值,以毫秒为单位 -->
+        <property name="timeBetweenEvictionRunsMillis" value="${dbcp.timeBetweenEvictionRunsMillis}" />
+        <!-- 1000 * 60 * 30 连接在池中保持空闲而不被空闲连接回收器线程回收时间值,以毫秒为单位 -->
+        <property name="minEvictableIdleTimeMillis" value="${dbcp.minEvictableIdleTimeMillis}" />
+    </bean>
+
+    <bean id="dataSource" class="com.haibo.future.web.datasource.MultipleDataSource">
+        <property name="targetDataSources">
+            <map key-type="java.lang.String">
+                <entry key="crmDataSource" value-ref="crmDataSource"></entry>
+                <entry key="ebDataSource" value-ref="ebDataSource"></entry>
+            </map>
+        </property>
+        <!-- 默认数据源 -->
+        <property name="defaultTargetDataSource" ref="crmDataSource"></property>
+    </bean>
+
+    <!-- 动态数据源切面 -->
+    <bean id="dataSourceAspect" class="com.haibo.future.web.datasource.DataSourceAspect"></bean>
+    <!-- 使用强大的切点表达式定义目标方法 -->
+    <aop:config>
+        <aop:pointcut id="serviceMethods"
+                      expression="execution(*
+		com.haibo.future.web.Service.*Service.*(..))" />
+        <!-- 动态数据源 。该切面必须第一个执行 （要在事物之前首先动态获取数据源） -->
+        <aop:advisor advice-ref="dataSourceAspect" pointcut-ref="serviceMethods" />
+    </aop:config>
+
     <!-- spring和MyBatis完美整合，不需要mybatis的配置映射文件 -->
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
-        <property name="dataSource" ref="crmDataSource" />
+        <property name="dataSource" ref="dataSource" />
         <!-- 自动扫描mapping.xml文件 -->
         <property name="mapperLocations" value="classpath:mybatis/*.xml"></property>
     </bean>

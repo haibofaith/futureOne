@@ -21,6 +21,12 @@ public class TestServiceImpl implements TestService {
     }
 
     @Override
+    public List<TestModel> selectAll2() {
+        logger.info("查询结果是"+testMapper.selectMyTest().toString());
+        return testMapper.selectMyTest();
+    }
+
+    @Override
     public int updateProductNum() {
         int count = testMapper.updateProductNum();
         logger.info("库存减少"+count+"条");

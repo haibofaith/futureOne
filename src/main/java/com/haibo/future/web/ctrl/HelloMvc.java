@@ -44,9 +44,22 @@ public class HelloMvc {
         PageModel<TestModel> pageModel  = new PageModel<>();
         pageModel.setList(testModels);
         response.setBody(pageModel);
+        return response.toString();
+    }
+
+    @RequestMapping(value = "/hiSql2")
+    @ResponseBody
+    public String hiSql2(HttpServletRequest request) {
+        BaseResponse response = new BaseResponse();
+
+        List<TestModel> testModels = testService.selectAll2();
+        PageModel<TestModel> pageModel  = new PageModel<>();
+        pageModel.setList(testModels);
+        response.setBody(pageModel);
 
         return response.toString();
     }
+
 
     @RequestMapping(value = "/helloKitty")
     @ResponseBody
