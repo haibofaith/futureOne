@@ -7,6 +7,8 @@ import com.haibo.future.web.entity.LoginRequest;
 import com.haibo.future.web.entity.PageModel;
 import com.haibo.future.web.entity.TestModel;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.ListOperations;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
@@ -15,9 +17,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 @Validated
 @Controller
@@ -35,17 +39,34 @@ public class HelloMvc {
     @Autowired
     private TestService testService;
 
+    @Resource
+    private RedisTemplate<String,String> redisTemplate;
+
     @RequestMapping(value = "/hiSql")
     @ResponseBody
     public String hiSql(HttpServletRequest request) {
         BaseResponse response = new BaseResponse();
-
         List<TestModel> testModels = testService.selectAll();
         PageModel<TestModel> pageModel  = new PageModel<>();
         pageModel.setList(testModels);
         response.setBody(pageModel);
         return response.toString();
     }
+
+
+    @RequestMapping(value = "/hiRedis")
+    @ResponseBody
+    public String hiRedis(HttpServletRequest request) {
+        BaseResponse response = new BaseResponse();
+        String str = redisTemplate.opsForValue().get("addr");
+        if (str==null){
+            redisTemplate.opsForValue().set("addr","beijing");
+        }
+        response.setBody(str);
+        return response.toString();
+    }
+
+
 
     @RequestMapping(value = "/hiSql2")
     @ResponseBody

@@ -130,3 +130,7 @@ execution()是最常用的切点函数，其语法如下所示：
        <version>${org.aspectj-version}</version>
 </dependency>
      <!-- end AspectJ -->   
+ 
+11、包冲突
+NotWritablePropertyException: Invalid property 'maxRedirects' of bean class [org.springframework.data.redis.connection.RedisClusterConfiguration]
+     
