@@ -1,11 +1,13 @@
 package com.haibo.future.web.ctrl;
 
+import com.alibaba.fastjson.JSONObject;
 import com.haibo.common.request.UserRequest;
 import com.haibo.future.web.Service.TestService;
 import com.haibo.future.web.entity.BaseResponse;
 import com.haibo.future.web.entity.LoginRequest;
 import com.haibo.future.web.entity.PageModel;
 import com.haibo.future.web.entity.TestModel;
+import com.haibo.future.web.models.Animal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.ListOperations;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -108,6 +110,15 @@ public class HelloMvc {
             String password = request.getPassword();
             return "hello:" + name + ":" + password;
         }
+    }
+
+    @Autowired
+    private Animal animal;
+    @RequestMapping(value = "/aopAnimal")
+    @ResponseBody
+    private String aopAnimal(HttpServletRequest request){
+        System.out.println("------------------");
+        return animal.sayName("yellowBean",1);
     }
 
 }

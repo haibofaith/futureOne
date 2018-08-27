@@ -167,4 +167,9 @@
         <property name="connectionFactory" ref="jedisConnectionFactory"/>
     </bean>
     <!--redis集群end-->
+    <!--定义aop切面及自动代理：配置@aspectJ切面的bean创建代理-->
+    <bean id="cat" class="com.haibo.future.web.models.impl.Cat"/>
+    <bean id="CacheAspect" class="com.haibo.future.web.aop.CacheAspect"></bean>
+    <bean id="LogAspect" class="com.haibo.future.web.aop.LogAspect"></bean>
+    <aop:aspectj-autoproxy/>
 </beans>
