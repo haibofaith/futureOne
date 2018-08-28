@@ -1,7 +1,7 @@
-package com.haibo.future.web.sort.quiksort;
+package com.haibo.future.web.interview.sort.quiksort;
 
 //自己写的，更具aha算法
-public class QuickSort2 {
+public class QuickSort {
     public static int[] quickSort2(int[] arrays, int low, int high) {
         if (low>high){
             return arrays;
