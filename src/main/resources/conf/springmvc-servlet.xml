@@ -25,6 +25,15 @@
             </bean>
         </mvc:message-converters>
     </mvc:annotation-driven>
+
+    <mvc:interceptors>
+        <!-- 日志拦截器 -->
+        <mvc:interceptor>
+            <mvc:mapping path="/mobile/**" />
+            <!--<mvc:exclude-mapping path="/static/**" />-->
+            <bean class="com.haibo.future.web.interceptors.SecurityInterceptor" />
+        </mvc:interceptor>
+    </mvc:interceptors>
     <!-- 扫描器 -->
     <context:component-scan base-package="com.haibo.future.web.ctrl"></context:component-scan>
 </beans>
