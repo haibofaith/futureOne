@@ -3,8 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <script type="text/javascript" src="${rc.contextPath}/b/js/jquery-1.7.1.min.js"></script>
 </head>
 <body>
-    <h1>hello</h1>
+    <a href="#" onclick="more()">发生本域more请求</a>
+    <a href="#" onclick="jump()">发生跨域jump请求</a>
+    <script type="text/javascript" src="${rc.contextPath}/b/js/more/more.js"></script>
+    <script type="text/javascript" src="${rc.contextPath}/b/js/more/jump.js"></script>
 </body>
 </html>

@@ -45,6 +45,8 @@
             <beans:value>text/html;charset=UTF-8</beans:value>
         </beans:property>
     </beans:bean>
+    <!--将/b映射到目录-->
+    <mvc:resources mapping="/b/js/**" location="/js/" cache-period="31556926"/>
 
     <!-- 加入注解驱动 -->
     <mvc:annotation-driven>
