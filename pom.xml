@@ -228,6 +228,12 @@
       <artifactId>amqp-client</artifactId>
       <version>4.2.2</version>
     </dependency>
+    <!--velocity-->
+    <dependency>
+      <groupId>org.apache.velocity</groupId>
+      <artifactId>velocity</artifactId>
+      <version>1.7</version>
+    </dependency>
 
   </dependencies>
 

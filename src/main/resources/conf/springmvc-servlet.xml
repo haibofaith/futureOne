@@ -10,12 +10,41 @@
     <!-- 配置handlerMapping -->
     <bean class="org.springframework.web.servlet.mvc.support.ControllerBeanNameHandlerMapping"></bean>
     <!-- 配置视图解析器 -->
-    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-        <!-- 前缀 :说明如果直接放在web-inf下，不需要加前缀-->
-        <property name="prefix" value="WEB-INF/view/"></property>
-        <!-- 后缀 ： -->
-        <property name="suffix" value=".jsp"></property>
-    </bean>
+    <!--<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">-->
+        <!--&lt;!&ndash; 前缀 :说明如果直接放在web-inf下，不需要加前缀&ndash;&gt;-->
+        <!--<property name="prefix" value="WEB-INF/view/"></property>-->
+        <!--&lt;!&ndash; 后缀 ： &ndash;&gt;-->
+        <!--<property name="suffix" value=".jsp"></property>-->
+    <!--</bean>-->
+
+    <!-- 配置Velocity引擎 -->
+    <beans:bean id="velocityConfigurer" class="org.springframework.web.servlet.view.velocity.VelocityConfigurer">
+        <beans:property name="resourceLoaderPath">
+            <beans:value>/WEB-INF/views/</beans:value>
+        </beans:property>
+        <beans:property name="velocityProperties">
+            <beans:props>
+                <beans:prop key="input.encoding">UTF-8</beans:prop>
+                <beans:prop key="output.encoding">UTF-8</beans:prop>
+            </beans:props>
+        </beans:property>
+    </beans:bean>
+
+    <!-- 配置Velocity视图解析器 -->
+    <beans:bean id="viewResolver" class="org.springframework.web.servlet.view.velocity.VelocityViewResolver">
+        <beans:property name="exposeSpringMacroHelpers">
+            <beans:value>true</beans:value>
+        </beans:property>
+        <beans:property name="requestContextAttribute">
+            <beans:value>rc</beans:value>
+        </beans:property>
+        <beans:property name="suffix">
+            <beans:value>.vm</beans:value>
+        </beans:property>
+        <beans:property name="contentType">
+            <beans:value>text/html;charset=UTF-8</beans:value>
+        </beans:property>
+    </beans:bean>
 
     <!-- 加入注解驱动 -->
     <mvc:annotation-driven>
