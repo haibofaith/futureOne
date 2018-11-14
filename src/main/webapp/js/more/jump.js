@@ -1,7 +1,7 @@
 function jump() {
     $.ajax({
         type: "POST",
-        url: "http://localhost:8081/a/helloDog",
+        url: "/a/helloDog",
         success: function(re){
             // var result = JSON.parse(re);
             console.log(re);
@@ -16,7 +16,7 @@ function jsonpJump() {
     $.ajax({
         type: "get",
         dataType:"jsonp",
-        url: "http://localhost:8081/a/helloDog",
+        url: "/a/helloDog",
         jsonp:"callbackparm",
         success: function(re){
             // var result = JSON.parse(re);
@@ -31,7 +31,7 @@ function jsonpJump() {
 function completJump() {
     $.ajax({
         type: "post",
-        url: "http://localhost:8081/a/completeReq",
+        url: "/a/completeReq",
         contentType:"application/json;charset=utf-8",
         data:JSON.stringify({name:"bobo",password:"123456"}),
         success: function(re){
@@ -47,7 +47,7 @@ function completJump() {
 function getCookie() {
     $.ajax({
         type: "get",
-        url: "http://localhost:8081/a/cookieReq",
+        url: "/a/cookieReq",
         xhrFields:{
           withCredentials:true
         },
@@ -64,7 +64,7 @@ function getCookie() {
 function getHeader() {
     $.ajax({
         type: "get",
-        url: "http://localhost:8081/a/getHeader",
+        url: "/a/getHeader",
         headers:{
           "x-header1":"AAA"
         },
