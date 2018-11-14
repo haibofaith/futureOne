@@ -8,8 +8,10 @@ function more() {
             console.log(re);
         },
         error: function(result){
-            // alert(result.retdesc);
+            console.log(result);
         }
     });
 }
+
+
 
