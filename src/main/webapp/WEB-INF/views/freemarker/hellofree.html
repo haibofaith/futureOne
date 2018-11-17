@@ -5,6 +5,10 @@
     <title>Title</title>
 </head>
 <body>
-    <h1> 嗨，freemarker </h1>
+    <ul>
+        <#list userList as item>
+            <li>${item.name}的生日是：${item.date?string('yyyy-MM-dd')}</li>
+        </#list>
+    </ul>
 </body>
 </html>
