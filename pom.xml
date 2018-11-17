@@ -235,6 +235,13 @@
       <version>1.7</version>
     </dependency>
 
+    <!-- https://mvnrepository.com/artifact/org.freemarker/freemarker -->
+    <dependency>
+      <groupId>org.freemarker</groupId>
+      <artifactId>freemarker</artifactId>
+      <version>2.3.23</version>
+    </dependency>
+
   </dependencies>
 
   <build>
