@@ -71,7 +71,15 @@
                 <prop key="auto_import">include/spring.ftl as spring</prop>
             </props>
         </property>
+        <!--自定义指令role-->
+        <property name="freemarkerVariables">
+            <map>
+                <entry key="role" value-ref="freemarkerTemplate"/>
+            </map>
+        </property>
     </bean>
+
+    <bean id="freemarkerTemplate" class="com.haibo.future.web.models.impl.RoleDirectModel"/>
 
     <!--亦可采用此种方式-->
     <!--<bean id="freemarkerConfigurer2"-->

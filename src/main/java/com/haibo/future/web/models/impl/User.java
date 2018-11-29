@@ -6,6 +6,15 @@ import java.util.Date;
 public class User implements Serializable{
     private String name;
     private Date date;
+    private String age;
+
+    public String getAge() {
+        return age;
+    }
+
+    public void setAge(String age) {
+        this.age = age;
+    }
 
     public User() {
     }
