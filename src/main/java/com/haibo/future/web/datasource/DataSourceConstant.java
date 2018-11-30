@@ -11,4 +11,9 @@ public class DataSourceConstant {
      */
     public static final String DATA_SOURCE_EBK = "ebDataSource";
 
+    /**
+     * EBK读数据源
+     */
+    public static final String DATA_SOURCE_LOCAL = "localSource";
+
 }

@@ -8,6 +8,8 @@
         http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
 
+    <import resource="classpath:conf/spring-shiro-context.xml"/>
+
     <context:component-scan base-package="com.haibo.future.web.Service.impl"></context:component-scan>
     <!-- 定义受环境影响易变的变量 -->
     <bean id="propetyPlaceholder"
@@ -72,11 +74,38 @@
         <property name="minEvictableIdleTimeMillis" value="${dbcp.minEvictableIdleTimeMillis}" />
     </bean>
 
+
+    <!-- 第三个数据源：配置eb数据源 -->
+    <bean id="localSource" class="org.apache.commons.dbcp.BasicDataSource"
+          destroy-method="close">
+        <property name="driverClassName" value="${jdbc.three.driverClassName}" />
+        <property name="url" value="${jdbc.three.url}" />
+        <property name="username" value="${jdbc.three.username}" />
+        <property name="password" value="${jdbc.three.password}" />
+        <!-- 池启动时创建的连接数量 -->
+        <property name="initialSize" value="${dbcp.initialSize}" />
+        <!-- 池里不会被释放的最多空闲连接数量。设置为0时表示无限制 -->
+        <property name="maxIdle" value="${dbcp.maxIdle}" />
+        <!-- 同一时间可以从池分配的最多连接数量。设置为0时表示无限制 -->
+        <property name="maxActive" value="${dbcp.maxActive}" />
+        <!-- 设置自动回收超时连接 -->
+        <property name="removeAbandoned" value="true" />
+        <!-- 自动回收超时时间(以秒数为单位) -->
+        <property name="removeAbandonedTimeout" value="${dbcp.removeAbandonedTimeout}" />
+        <!-- 等待超时以毫秒为单位，在抛出异常之前，池等待连接被回收的最长时间（当没有可用连接时）。设置为-1表示无限等待 -->
+        <property name="maxWait" value="1000" />
+        <!-- 在空闲连接回收器线程运行期间休眠的时间值,以毫秒为单位 -->
+        <property name="timeBetweenEvictionRunsMillis" value="${dbcp.timeBetweenEvictionRunsMillis}" />
+        <!-- 1000 * 60 * 30 连接在池中保持空闲而不被空闲连接回收器线程回收时间值,以毫秒为单位 -->
+        <property name="minEvictableIdleTimeMillis" value="${dbcp.minEvictableIdleTimeMillis}" />
+    </bean>
+
     <bean id="dataSource" class="com.haibo.future.web.datasource.MultipleDataSource">
         <property name="targetDataSources">
             <map key-type="java.lang.String">
                 <entry key="crmDataSource" value-ref="crmDataSource"></entry>
                 <entry key="ebDataSource" value-ref="ebDataSource"></entry>
+                <entry key="localSource" value-ref="localSource"></entry>
             </map>
         </property>
         <!-- 默认数据源 -->

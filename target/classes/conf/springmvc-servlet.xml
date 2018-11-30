@@ -10,12 +10,100 @@
     <!-- 配置handlerMapping -->
     <bean class="org.springframework.web.servlet.mvc.support.ControllerBeanNameHandlerMapping"></bean>
     <!-- 配置视图解析器 -->
-    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-        <!-- 前缀 :说明如果直接放在web-inf下，不需要加前缀-->
-        <property name="prefix" value="WEB-INF/view/"></property>
-        <!-- 后缀 ： -->
-        <property name="suffix" value=".jsp"></property>
+    <!--<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">-->
+        <!--&lt;!&ndash; 前缀 :说明如果直接放在web-inf下，不需要加前缀&ndash;&gt;-->
+        <!--<property name="prefix" value="WEB-INF/view/"></property>-->
+        <!--&lt;!&ndash; 后缀 ： &ndash;&gt;-->
+        <!--<property name="suffix" value=".jsp"></property>-->
+    <!--</bean>-->
+
+    <!-- 配置Velocity引擎 -->
+    <beans:bean id="velocityConfigurer" class="org.springframework.web.servlet.view.velocity.VelocityConfigurer">
+        <beans:property name="resourceLoaderPath">
+            <beans:value>/WEB-INF/views/</beans:value>
+        </beans:property>
+        <beans:property name="velocityProperties">
+            <beans:props>
+                <beans:prop key="input.encoding">UTF-8</beans:prop>
+                <beans:prop key="output.encoding">UTF-8</beans:prop>
+            </beans:props>
+        </beans:property>
+    </beans:bean>
+
+    <!-- 配置Velocity视图解析器 -->
+    <beans:bean id="viewResolver" class="org.springframework.web.servlet.view.velocity.VelocityViewResolver">
+        <beans:property name="exposeSpringMacroHelpers">
+            <beans:value>true</beans:value>
+        </beans:property>
+        <beans:property name="requestContextAttribute">
+            <beans:value>rc</beans:value>
+        </beans:property>
+        <beans:property name="suffix">
+            <beans:value>.vm</beans:value>
+        </beans:property>
+        <beans:property name="contentType">
+            <beans:value>text/html;charset=UTF-8</beans:value>
+        </beans:property>
+    </beans:bean>
+
+    <!-- freemarker的配置begin -->
+    <bean id="freemarkerConfigurer"
+          class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
+        <property name="templateLoaderPath" value="/WEB-INF/views/" />
+
+        <property name="freemarkerSettings">
+            <props>
+                <prop key="tag_syntax">auto_detect</prop>
+                <!--模版更新时间-->
+                <prop key="template_update_delay">10</prop>
+                <prop key="defaultEncoding">UTF-8</prop>
+                <prop key="url_escaping_charset">UTF-8</prop>
+                <prop key="locale">zh_CN</prop>
+                <prop key="boolean_format">true,false</prop>
+                <!--时间日期格式-->
+                <prop key="datetime_format">yyyy-MM-dd HH:mm:ss</prop>
+                <prop key="date_format">yyyy-MM-dd</prop>
+                <prop key="time_format">HH:mm:ss</prop>
+                <prop key="number_format">#.##</prop>
+                <!--去掉多余空格-->
+                <prop key="whitespace_stripping">true</prop>
+                <!--自动引入模版的位置-->
+                <prop key="auto_import">include/spring.ftl as spring</prop>
+            </props>
+        </property>
+        <!--自定义指令role-->
+        <property name="freemarkerVariables">
+            <map>
+                <entry key="role" value-ref="freemarkerTemplate"/>
+            </map>
+        </property>
     </bean>
+
+    <bean id="freemarkerTemplate" class="com.haibo.future.web.models.impl.RoleDirectModel"/>
+
+    <!--亦可采用此种方式-->
+    <!--<bean id="freemarkerConfigurer2"-->
+          <!--class="org.springframework.beans.factory.config.PropertiesFactoryBean">-->
+        <!--<property name="location" value="classpath:conf/freemarker.properties"/>-->
+    <!--</bean>-->
+
+    <!-- 定义freemarker的视图解析器 -->
+    <bean id="freeMarkerViewResolver"
+          class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
+        <!--表现层所在目录-->
+        <property name="viewClass" value="org.springframework.web.servlet.view.freemarker.FreeMarkerView"/>
+        <!--view页面类型-->
+        <property name="suffix" value=".html" />
+        <property name="cache" value="true"/>
+        <property name="contentType" value="text/html;charset=UTF-8" />
+        <property name="exposeRequestAttributes" value="true" />
+        <property name="exposeSessionAttributes" value="true" />
+        <property name="exposeSpringMacroHelpers" value="true" />
+    </bean>
+    <!--freemarker的配置end-->
+
+    <!--将/b映射到目录-->
+    <mvc:resources mapping="/b/js/**" location="/js/" cache-period="31556926"/>
 
     <!-- 加入注解驱动 -->
     <mvc:annotation-driven>
@@ -25,6 +113,15 @@
             </bean>
         </mvc:message-converters>
     </mvc:annotation-driven>
+
+    <mvc:interceptors>
+        <!-- 日志拦截器 -->
+        <mvc:interceptor>
+            <mvc:mapping path="/mobile/**" />
+            <!--<mvc:exclude-mapping path="/static/**" />-->
+            <bean class="com.haibo.future.web.interceptors.SecurityInterceptor" />
+        </mvc:interceptor>
+    </mvc:interceptors>
     <!-- 扫描器 -->
     <context:component-scan base-package="com.haibo.future.web.ctrl"></context:component-scan>
 </beans>

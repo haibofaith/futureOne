@@ -28,4 +28,9 @@ public class BMvc {
         return new ModelAndView("more");
     }
 
+
+    @RequestMapping("/login")
+    public ModelAndView login(HttpServletRequest httpServletRequest, HttpServletResponse resp) throws Exception {
+        return new ModelAndView("login");
+    }
 }
