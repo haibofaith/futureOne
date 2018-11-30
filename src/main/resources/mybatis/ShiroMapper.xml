@@ -9,4 +9,11 @@
 		user WHERE user_name=#{userName}
 	</select>
 
+	<select id="selectRoleByUserName" resultType="java.lang.String">
+		SELECT
+		user_role
+		FROM
+		user_role WHERE user_name=#{userName}
+	</select>
+
 </mapper>

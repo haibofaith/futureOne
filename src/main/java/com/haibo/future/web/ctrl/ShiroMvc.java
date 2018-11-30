@@ -23,6 +23,11 @@ public class ShiroMvc {
         }catch (Exception e){
             return e.getMessage();
         }
+        if (subject.hasRole("admin")){
+            return "管理员登录成功";
+        }else if (subject.hasRole("guest")){
+            return "游客登录成功";
+        }
         return "登录成功";
     }
 

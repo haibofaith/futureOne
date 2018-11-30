@@ -133,4 +133,20 @@ execution()是最常用的切点函数，其语法如下所示：
  
 11、包冲突
 NotWritablePropertyException: Invalid property 'maxRedirects' of bean class [org.springframework.data.redis.connection.RedisClusterConfiguration]
+
+12、shiro表结构
+CREATE TABLE `haibodb`.`<table_name>` (
+	`pass_word` varchar(50) NOT NULL COMMENT '密码',
+	`user_name` varchar(50) NOT NULL DEFAULT '' COMMENT '用户名',
+	`id` int(10) NOT NULL AUTO_INCREMENT,
+	PRIMARY KEY (`id`)
+) ENGINE=`InnoDB` AUTO_INCREMENT=3 DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci ROW_FORMAT=COMPACT COMMENT='' CHECKSUM=0 DELAY_KEY_WRITE=0;
+
+CREATE TABLE `haibodb`.`<table_name>` (
+	`id` int(10) NOT NULL AUTO_INCREMENT,
+	`user_name` varchar(50) NOT NULL,
+	`user_role` varchar(50) NOT NULL,
+	PRIMARY KEY (`id`)
+) ENGINE=`InnoDB` AUTO_INCREMENT=3 DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci ROW_FORMAT=COMPACT COMMENT='' CHECKSUM=0 DELAY_KEY_WRITE=0;
+
      

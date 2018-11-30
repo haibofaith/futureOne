@@ -16,7 +16,7 @@
                 /b/login = anon
                 /login.html = anon
                 /shiro/sublogin = anon
-                /* = authc
+                /b/* = authc
             </value>
         </property>
 
