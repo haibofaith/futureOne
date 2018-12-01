@@ -33,4 +33,10 @@ public class BMvc {
     public ModelAndView login(HttpServletRequest httpServletRequest, HttpServletResponse resp) throws Exception {
         return new ModelAndView("login");
     }
+
+
+    @RequestMapping("/error")
+    public ModelAndView error(HttpServletRequest httpServletRequest, HttpServletResponse resp) throws Exception {
+        return new ModelAndView("error");
+    }
 }

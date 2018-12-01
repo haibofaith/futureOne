@@ -3,6 +3,7 @@ package com.haibo.future.web.ctrl;
 import com.haibo.future.web.models.impl.UserInfo;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.apache.shiro.subject.Subject;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,4 +32,18 @@ public class ShiroMvc {
         return "登录成功";
     }
 
+    @RequiresRoles("admin")
+    @RequestMapping(value = "/testRole")
+    @ResponseBody
+    public String testRole(){
+        return "admin success";
+    }
+
+
+    @RequiresRoles("guest")
+    @RequestMapping(value = "/guestRole")
+    @ResponseBody
+    public String guestRole(){
+        return "guest success";
+    }
 }

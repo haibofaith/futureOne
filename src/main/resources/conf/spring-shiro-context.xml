@@ -9,14 +9,16 @@
         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
     <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
         <property name="securityManager" ref="securityManager"/>
-        <property name="loginUrl" value="/login.html"/>
-        <property name="unauthorizedUrl" value="/index.html"/>
+        <property name="loginUrl" value="/b/login"/>
+        <property name="unauthorizedUrl" value="/b/error"/>
         <property name="filterChainDefinitions">
             <value>
                 /b/login = anon
+                /b/error = anon
                 /login.html = anon
                 /shiro/sublogin = anon
                 /b/* = authc
+                /shiro/* = authc
             </value>
         </property>
 
@@ -33,4 +35,5 @@
         <property name="hashAlgorithmName" value="md5"/>
         <property name="hashIterations" value="1"/>
     </bean>
+
 </beans>
