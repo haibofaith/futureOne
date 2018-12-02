@@ -46,4 +46,11 @@ public class ShiroMvc {
     public String guestRole(){
         return "guest success";
     }
+
+
+    @RequestMapping(value = "/getPerms")
+    @ResponseBody
+    public String getPerms(){
+        return "admin success";
+    }
 }

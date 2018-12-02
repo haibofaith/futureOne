@@ -18,6 +18,7 @@
                 /login.html = anon
                 /shiro/sublogin = anon
                 /b/* = authc
+                /shiro/getPerms = roles["guest"]
                 /shiro/* = authc
             </value>
         </property>
