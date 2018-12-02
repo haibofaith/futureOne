@@ -51,6 +51,18 @@ public class ShiroMvc {
     @RequestMapping(value = "/getPerms")
     @ResponseBody
     public String getPerms(){
-        return "admin success";
+        return "adgetPerms success";
+    }
+
+    @RequestMapping(value = "/getPerms1")
+    @ResponseBody
+    public String getPerms1(){
+        return "getPerms1 success";
+    }
+
+    @RequestMapping(value = "/getPerms2")
+    @ResponseBody
+    public String getPerms2(){
+        return "getPerms2 success";
     }
 }
