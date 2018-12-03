@@ -50,7 +50,7 @@
 
     <import resource="classpath:conf/spring-jedis-context.xml"/>
 
-    <bean id="sessionManager" class="org.apache.shiro.web.session.mgt.DefaultWebSessionManager">
+    <bean id="sessionManager" class="com.haibo.future.web.session.CustomSessionManager">
         <property name="sessionDAO" ref="redisSessionDao"/>
     </bean>
 
