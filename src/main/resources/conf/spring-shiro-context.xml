@@ -36,6 +36,7 @@
 
     <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
         <property name="realm" ref="realm"/>
+        <property name="sessionManager" ref="sessionManager"/>
     </bean>
 
     <bean id="realm" class="com.haibo.future.web.shiro.realm.CustomRealm">
@@ -47,4 +48,11 @@
         <property name="hashIterations" value="1"/>
     </bean>
 
+    <import resource="classpath:conf/spring-jedis-context.xml"/>
+
+    <bean id="sessionManager" class="org.apache.shiro.web.session.mgt.DefaultWebSessionManager">
+        <property name="sessionDAO" ref="redisSessionDao"/>
+    </bean>
+
+    <bean class="com.haibo.future.web.session.RedisSessionDao" id="redisSessionDao"/>
 </beans>

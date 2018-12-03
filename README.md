@@ -149,4 +149,20 @@ CREATE TABLE `haibodb`.`<table_name>` (
 	PRIMARY KEY (`id`)
 ) ENGINE=`InnoDB` AUTO_INCREMENT=3 DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci ROW_FORMAT=COMPACT COMMENT='' CHECKSUM=0 DELAY_KEY_WRITE=0;
 
+
+13、安装redis遇到问题：
+1》、couldn't open socket: host is unreachable (nodename nor servname provided, or not known).
+处理方法新增host
+127.0.0.1 xionghaibodeMacBook-Pro localhost
+2》、Make test gives error: couldn't execute "src/redis-benchmark"
+make distclean
+make
+make test 
+3》redis.clients.jedis.exceptions.InvalidURIException: Cannot open Redis connection due invalid URI
+<bean id="jedisPool" class="redis.clients.jedis.JedisPool" destroy-method="destroy">
+        <constructor-arg index="0" ref="jedisPoolConfig" />
+        <constructor-arg index="1" value="192.168.12.123"   />
+        <constructor-arg index="2" value="6379" type="int" />
+        <constructor-arg index="3" value="2000" type="int" />
+    </bean>
      
