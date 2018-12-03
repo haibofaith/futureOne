@@ -43,6 +43,7 @@ public class CustomRealm extends AuthorizingRealm{
     }
 
     private List<String> getRoleByUserName(String userName) {
+        System.out.println("从数据库中获取授权数据");
         return shiroService.selectRoleByUserName(userName);
     }
 

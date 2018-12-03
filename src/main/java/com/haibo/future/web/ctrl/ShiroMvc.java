@@ -20,6 +20,7 @@ public class ShiroMvc {
         Subject subject = SecurityUtils.getSubject();
         UsernamePasswordToken token = new UsernamePasswordToken(request.getUsername(),request.getPassword());
         try {
+            token.setRememberMe(request.isRememberMe());
             subject.login(token);
         }catch (Exception e){
             return e.getMessage();

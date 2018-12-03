@@ -12,6 +12,7 @@
 
     <context:component-scan base-package="com.haibo.future.web.Service.impl"></context:component-scan>
     <context:component-scan base-package="com.haibo.future.web.util"></context:component-scan>
+    <context:component-scan base-package="com.haibo.future.web.cache"></context:component-scan>
     <!-- 定义受环境影响易变的变量 -->
     <bean id="propetyPlaceholder"
           class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
